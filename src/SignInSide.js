@@ -17,6 +17,7 @@ import axios from 'axios';
 import { Redirect,Route } from 'react-router-dom'
 import Admin from "layouts/Admin"
 import DashboardPage from "views/Dashboard/Dashboard.js";
+import history from "./history"
 
 
 
@@ -72,8 +73,6 @@ export default function SignInSide() {
   function onSubmit(e){
     e.preventDefault()
     var response
-    alert(email)
-    alert(password)
     // axios.post(`http://127.0.0.1:5000/`, {
     //   headers: {
     //       'Content-Type': 'application/json',
@@ -106,16 +105,8 @@ export default function SignInSide() {
       })
       .then(res => res.json())
       .then(res =>{
-        alert(res['mess'])
-        console.log("Success ",res['mess'])
         if(res['mess']=='Login Successful Bitch'){
-          alert("In if..")
-          return (
-          <Route
-            path="/admin"
-            component={Admin}
-          />
-        );
+          history.push('/admin')
         }
       });
 
