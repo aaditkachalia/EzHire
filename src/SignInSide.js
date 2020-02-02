@@ -35,6 +35,8 @@ function Copyright() {
   );
 }
 
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
@@ -70,8 +72,23 @@ export default function SignInSide() {
   const classes = useStyles();
   const [email, setEmail]= useState("")
   const [password,setPassword]=useState("")
+  const [loginf,setLoginf]=useState("none")
+  function Login(props){
+  const styles = {
+    color: 'red',
+    display: loginf,
+    fontSize: '14px',
+    fontFamily: 'Comic Sans'
+
+  }
+  return(
+    <p style={styles}><i><b>Login Failed, Please try again! </b></i></p>
+    )
+}
+
   function onSubmit(e){
     e.preventDefault()
+    setLoginf("none")
     var response
     // axios.post(`http://127.0.0.1:5000/`, {
     //   headers: {
@@ -107,6 +124,9 @@ export default function SignInSide() {
       .then(res =>{
         if(res['mess']=='Login Successful Bitch'){
           history.push('/admin')
+        }
+        else{
+          setLoginf("block")
         }
       });
 
@@ -150,6 +170,7 @@ export default function SignInSide() {
               onChange={(e)=>setPassword(e.target.value)}
 
             />
+            <Login />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

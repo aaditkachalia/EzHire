@@ -20,6 +20,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
+import history from "C:/Users/Apurva/Desktop/ezhire/src/history.js"
 
 const useStyles = makeStyles(styles);
 
@@ -27,6 +28,9 @@ export default function AdminNavbarLinks() {
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
+  function SignOut(){
+    history.push("/signin")
+  }
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -207,7 +211,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={SignOut}
                       className={classes.dropdownItem}
                     >
                       Logout
