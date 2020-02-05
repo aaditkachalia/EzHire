@@ -25,6 +25,7 @@ import history from "./history"
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
 import SignInSide from "SignInSide.js"
+import SignUp from "SignUp"
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 
 ReactDOM.render(
@@ -32,7 +33,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/signin" component={SignInSide} />
       <Route path="/admin" component={Admin} />
-      <Route path="/rtl" component={RTL} />
+      <Route path="/signup" component={SignUp} />
       <Redirect from="/" to="/signin" />
     </Switch>
   </Router>,
