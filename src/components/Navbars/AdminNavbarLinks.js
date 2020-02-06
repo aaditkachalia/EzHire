@@ -20,7 +20,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
-import history from "C:/Users/Apurva/Desktop/ezhire/src/history.js"
+import history from "../../history.js"
 
 const useStyles = makeStyles(styles);
 

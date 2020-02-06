@@ -123,6 +123,9 @@ export default function SignInSide() {
       .then(res => res.json())
       .then(res =>{
         if(res['mess']=='Login Successful Bitch'){
+          
+          localStorage.setItem('user_id',res['user_id'])
+         
           history.push('/admin')
         }
         else{

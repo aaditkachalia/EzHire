@@ -6,6 +6,8 @@ from flask_cors import CORS,cross_origin
 import json
 import time
 
+
+
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -56,10 +58,8 @@ def login():
 			user = auth.sign_in_with_email_and_password(email,password)
 			print("Sign in successful ",user)
 			print("The user_id is ",user['localId'])
-			session['user_id']=user['localId']
-			mock_session=session.pop('user_id',None)
-			print("The session is..",mock_session)
-			response={'mess':"Login Successful Bitch"}
+			
+			response={'mess':"Login Successful Bitch",'user_id':user['localId']}
 			#return json.dumps(response)
 		except Exception as e:
 			print(e)
@@ -71,10 +71,20 @@ def login():
 
 @app.route('/signup', methods = ['GET', 'POST'])
 def signup():
-	data={"Name":"Aadit Kachalia","Age":"21","email":"aaditkachalia@gmail.com"}
-	user_id = session.pop('user_id',None)
-	print("User id is ",user_id)
-	return "Hello World"
+	#data={"Name":"Aadit Kachalia","Age":"21","email":"aaditkachalia@gmail.com"}
+	if request.method == 'POST':
+		user_key=request.get_data()
+		user_id=user_key.decode("utf-8")
+		print("The user key is ",user_id)
+		db=firebase.database()
+		success={'success':"Successfull response"}
+		user_id=user_id.replace('"','')   
+		user_profile=db.child("users").child(user_id).get().val()
+		print("The details are....",user_profile)
+		hey=json.dumps(user_profile)
+		print("YOYOYOYOYO",hey)
+		#return json.dumps(user_profile)
+	return json.dumps(hey)
 
 if __name__ == '__main__':
     app.run(debug=True)

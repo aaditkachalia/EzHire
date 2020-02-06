@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -35,8 +35,26 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
+ 
+
 
 export default function UserProfile() {
+  useEffect(()=>{
+  console.log("Hey babbbbaaa",localStorage.getItem('user_id'))
+  const data=localStorage.getItem('user_id')
+  fetch("http://127.0.0.1:5000/signup",{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body:JSON.stringify(data),
+      })
+      .then(res => res.json())
+      .then(res =>{
+        console.log("Success",res)
+      });
+},[]);
   const classes = useStyles();
   return (
     <div>
