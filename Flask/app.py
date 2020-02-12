@@ -103,9 +103,10 @@ def dashboard():
 		interview_detail=json.loads(interview_detail)
 		for i in interview_detail.items():
 			if i[1]["user_id"] == user_id:
-				final_interview[i[0]] = i 
+				final_interview[i[0]] = i[1] 
 		print("The interview details ",interview_detail)
 		print("The final interview is ",final_interview)
+		final_interview=json.dumps(final_interview)
 	return json.dumps(final_interview)   
 
 if __name__ == '__main__':

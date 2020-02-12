@@ -57,7 +57,14 @@ export default function Dashboard() {
       })
       .then(res => res.json())
       .then(res =>{
-        console.log("Success",res)
+        const x= JSON.parse(res)
+        console.log("Success",x)
+        for (var key in x){
+          console.log("Yaya",x[key]["companyName"])
+        }
+        
+        
+
       });
 },[]);
   const classes = useStyles();
