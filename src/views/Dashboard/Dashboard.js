@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -44,6 +44,22 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
+  useEffect(()=>{
+  console.log("Huba huba")
+  const data=localStorage.getItem('user_id')
+  fetch("http://127.0.0.1:5000/dashboard",{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body:JSON.stringify(data),
+      })
+      .then(res => res.json())
+      .then(res =>{
+        console.log("Success",res)
+      });
+},[]);
   const classes = useStyles();
   function openchat(){
     window.open("https://www.google.com/")

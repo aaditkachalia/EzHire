@@ -86,5 +86,27 @@ def signup():
 		#return json.dumps(user_profile)
 	return json.dumps(hey)
 
+@app.route('/dashboard',methods=['GET','POST'])
+def dashboard():
+	if request.method == 'POST':
+		user_key=request.get_data()
+		user_key=request.get_data()
+		user_id=user_key.decode("utf-8")
+		print("The user key is ",user_id)
+		db=firebase.database()
+		final_interview={}
+		success={'success':"Successfull Interview"}
+		user_id=user_id.replace('"','') 
+		print("The user id is ",user_id)
+		interview_detail = db.child("interview").get().val()
+		interview_detail = json.dumps(interview_detail)
+		interview_detail=json.loads(interview_detail)
+		for i in interview_detail.items():
+			if i[1]["user_id"] == user_id:
+				final_interview[i[0]] = i 
+		print("The interview details ",interview_detail)
+		print("The final interview is ",final_interview)
+	return json.dumps(final_interview)   
+
 if __name__ == '__main__':
     app.run(debug=True)
