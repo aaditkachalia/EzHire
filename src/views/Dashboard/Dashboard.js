@@ -57,9 +57,12 @@ export default function Dashboard() {
       })
       .then(res => res.json())
       .then(res =>{
-        const interviews = res.map(item => <InterviewCard key={item} companyname={item.companyName}/>)
-        localStorage.setItem('result', interviews)
-        console.log("Success",res)
+        const x= JSON.parse(res)
+        console.log("Success",x)
+        for (var key in x){
+          console.log("Yaya",x[key]["companyName"])
+        }
+        
       });
 },[]);
   const classes = useStyles();
