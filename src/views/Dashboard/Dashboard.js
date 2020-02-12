@@ -57,6 +57,8 @@ export default function Dashboard() {
       })
       .then(res => res.json())
       .then(res =>{
+        const interviews = res.map(item => <InterviewCard key={item} companyname={item.companyName}/>)
+        localStorage.setItem('result', interviews)
         console.log("Success",res)
       });
 },[]);
@@ -64,6 +66,7 @@ export default function Dashboard() {
   function openchat(){
     window.open("https://www.google.com/")
   }
+const interviews=localStorage.getItem('result')
   return (
     <div>
       <GridContainer>
@@ -143,9 +146,11 @@ export default function Dashboard() {
         </GridItem>
       </GridContainer>
       <GridContainer>
+
         <InterviewCard companyname="ZS Associates"/>
         <InterviewCard companyname="Amazon Web Services"/>
         <InterviewCard companyname="Quantiphi"/>
+        {interviews}
         
       </GridContainer>
       <GridContainer>

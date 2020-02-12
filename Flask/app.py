@@ -106,6 +106,7 @@ def dashboard():
 				final_interview[i[0]] = i 
 		print("The interview details ",interview_detail)
 		print("The final interview is ",final_interview)
+		final_interview=json.dumps(final_interview)
 	return json.dumps(final_interview)   
 
 if __name__ == '__main__':
