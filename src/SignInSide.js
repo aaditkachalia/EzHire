@@ -17,6 +17,7 @@ import axios from 'axios';
 import { Redirect,Route } from 'react-router-dom'
 import Admin from "layouts/Admin"
 import DashboardPage from "views/Dashboard/Dashboard.js";
+import InterviewCard from "views/Dashboard/InterviewCard.js"
 import history from "./history"
 
 
@@ -126,12 +127,61 @@ export default function SignInSide() {
           
           localStorage.setItem('user_id',res['user_id'])
          
-          history.push('/admin')
+          //history.push('/admin')
         }
         else{
           setLoginf("block")
         }
+      })
+      .then(res => {
+        const data1=localStorage.getItem('user_id')
+        fetch("http://127.0.0.1:5000/dashboard",{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body:JSON.stringify(data1),
+      })
+      .then(res => res.json())
+      .then(res =>{
+        console.log("Success",typeof(res))
+        res=JSON.stringify(res)
+        const x= JSON.parse(res)
+        const y = Object.values(x)
+        console.log("Success2",typeof(y),y)
+        const interviews=[]
+        for (var key in x){
+          //console.log("Yaya",x[key]["companyName"])
+            console.log("Yaya",x[key][1]["companyName"])
+            let companyname = x[key][1]["companyName"]
+            interviews.push(companyname)
+        }
+        localStorage.setItem("interviewcard",interviews)
+        console.log("Inside signin ",interviews, typeof(interviews))
+        history.push('/admin')
+
+      })
+      .then(res =>{
+        const data=localStorage.getItem('user_id')
+        fetch("http://127.0.0.1:5000/signup",{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body:JSON.stringify(data),
+      })
+      .then(res => res.json())
+      .then(res =>{
+        let userprofile=res
+        localStorage.setItem("userprofile",userprofile)
+        console.log("Success",userprofile,typeof(userprofile))
       });
+
+      })
+      history.push('/admin')
+      });
 
   }
 

@@ -91,8 +91,22 @@ function Interviewee(props){
     const [icode, isetcode]= useState("")
     function isubmit(e){
       e.preventDefault()
-       var data ={"fname":ifname,"lname":ilname,"email":iemail,"password":ipass,"city":icity,"code":icode}
+       var data ={"firstName":ifname,"lastName":ilname,"email":iemail,"password":ipass,"city":icity,"postalCode":icode,"username" :iemail}
        alert(ifname+ilname+iemail+ipass+icity+icode)
+       fetch("http://127.0.0.1:5000/register",{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body:JSON.stringify(data),
+      })
+      .then(res => res.json())
+      .then(res =>{
+        let userprofile=res
+        localStorage.setItem("userprofile",userprofile)
+        console.log("Success",userprofile,typeof(userprofile))
+      });
        history.push('/admin')
     }
     if(props.display===1)

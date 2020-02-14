@@ -86,6 +86,34 @@ def signup():
 		#return json.dumps(user_profile)
 	return json.dumps(hey)
 
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	#data={"Name":"Aadit Kachalia","Age":"21","email":"aaditkachalia@gmail.com"}
+	if request.method == 'POST':
+		user_key=request.get_data()
+		user_detail=user_key.decode("utf-8")
+		json_data=json.loads(user_detail)
+		print("The json_data is ",json_data)
+		db=firebase.database()
+		email=json_data['email']
+		password=json_data['password']
+		x=auth.create_user_with_email_and_password(email, password)
+		#user_id=x['localId']
+		print("Account successfully created bitchhhhhh")
+		user_id = auth.sign_in_with_email_and_password(email,password)
+		success={'success':"Successfull response"}
+		# for element in json_data:
+		# 	element.pop('password',True)
+		print(db.child("users").child(user_id['localId']).set(json_data))
+		print("Successfully created")
+		#user_id=user_id.replace('"','')   
+		#user_profile=db.child("users").child(user_id).get().val()
+		#print("The details are....",user_profile)
+		#hey=json.dumps(user_profile)
+		#print("YOYOYOYOYO",hey)
+		#return json.dumps(user_profile)
+	return json.dumps(success)
+
 @app.route('/dashboard',methods=['GET','POST'])
 def dashboard():
 	if request.method == 'POST':
